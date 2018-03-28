@@ -9,7 +9,8 @@ import bg.uni.sofia.fmi.commands.*;
 public class InputOutputController {
 
 	private Map<String, Command> mapOfPossibleCommands;
-
+	private static Scanner inScanner;
+	
 	public InputOutputController() {
 
 		mapOfPossibleCommands = new HashMap<>();
@@ -17,15 +18,17 @@ public class InputOutputController {
 		mapOfPossibleCommands.put("get-tv-series", new GetTvSeriesCommand());
 		mapOfPossibleCommands.put("get-movie-poster", new GetMoviePosterCommand());
 
+		inScanner = new Scanner(System.in);
 	}
 
 	public String keyboardInput() {
 
+		String resultString = new String();
+
 		System.out.println("Enter command, please");
-		try (Scanner in = new Scanner(System.in)) {
-			String result = in.nextLine();
-			return result;
-		}
+
+		resultString = inScanner.nextLine();
+		return resultString;
 
 	}
 
@@ -73,14 +76,14 @@ public class InputOutputController {
 		}
 
 		System.out.println("bye, bye :)");
-
+		inScanner.close();
 	}
 
 	public static void main(String[] args) {
 
 		InputOutputController test = new InputOutputController();
 		test.run();
-
+		// System.out.println(test.keyboardInput());
 	}
 
 }
