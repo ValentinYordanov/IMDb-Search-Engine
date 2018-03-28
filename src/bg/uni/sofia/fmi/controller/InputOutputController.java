@@ -8,17 +8,23 @@ import bg.uni.sofia.fmi.commands.*;
 
 public class InputOutputController {
 
-	private Map<String, Command> mapOfPossibleCommands;
+	private Map<String, Command> mapOfSupportedCommands;
 	private static Scanner inScanner;
-	
+
 	public InputOutputController() {
 
-		mapOfPossibleCommands = new HashMap<>();
-		mapOfPossibleCommands.put("get-movie", new GetMovieCommand());
-		mapOfPossibleCommands.put("get-tv-series", new GetTvSeriesCommand());
-		mapOfPossibleCommands.put("get-movie-poster", new GetMoviePosterCommand());
+		mapOfSupportedCommands = new HashMap<>();
+		mapOfSupportedCommands.put("get-movie", new GetMovieCommand());
+		mapOfSupportedCommands.put("get-tv-series", new GetTvSeriesCommand());
+		mapOfSupportedCommands.put("get-movie-poster", new GetMoviePosterCommand());
 
 		inScanner = new Scanner(System.in);
+	}
+
+	public void addNewSupportedCommand(String commandName, Command commandObject) {
+
+		mapOfSupportedCommands.put(commandName, commandObject);
+
 	}
 
 	public String keyboardInput() {
@@ -32,7 +38,7 @@ public class InputOutputController {
 
 	}
 
-	private String[] wordsAndCommandsInLineSplitter(String initialString) {
+	private String[] splitWordsAndCommandsFromInputLine(String initialString) {
 
 		String[] result = new String[2];
 
@@ -58,7 +64,7 @@ public class InputOutputController {
 
 		while (true) {
 
-			String[] wordsInWholeLine = wordsAndCommandsInLineSplitter(keyboardInput());
+			String[] wordsInWholeLine = splitWordsAndCommandsFromInputLine(keyboardInput());
 
 			String commandString = wordsInWholeLine[0];
 			String fieldsString = wordsInWholeLine[1];
@@ -68,7 +74,7 @@ public class InputOutputController {
 			}
 
 			try {
-				mapOfPossibleCommands.get(commandString).run(fieldsString);
+				mapOfSupportedCommands.get(commandString).run(fieldsString);
 			} catch (NullPointerException ex) {
 				System.out.println("That is not a valid command, please try again :)");
 			}
