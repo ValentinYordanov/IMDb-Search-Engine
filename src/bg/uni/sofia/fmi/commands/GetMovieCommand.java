@@ -38,7 +38,7 @@ public class GetMovieCommand implements Command {
 		if (hasFields) {
 			for (int i = 0; i < commandFields.length; i++) {
 				try {
-					System.out.println(FileHandler.parseJSONForMovies(commandFields[i], movieFile));
+					System.out.println(FileHandler.parseJSON(commandFields[i], movieFile));
 				} catch (ParseException | IOException e) {
 					System.out.println("Problem with parsing file");
 				}

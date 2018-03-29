@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -51,7 +55,7 @@ public class FileHandler {
 
 		seriesName = seriesName.replace(" ", "+");
 
-		String URLString = "http://www.omdbapi.com/?apikey=f21dfb64&t=" + seriesName;
+		String URLString = "http://www.omdbapi.com/?apikey=f21dfb64&t=" + seriesName + "&Season=" + seasonNumber;
 
 		URL url = null;
 		try {
@@ -77,7 +81,7 @@ public class FileHandler {
 
 	}
 
-	public static String parseJSONForMovies(String whatToParse, File fileName) throws ParseException, IOException {
+	public static String parseJSON(String whatToParse, File fileName) throws ParseException, IOException {
 
 		String parseResult = "";
 		JSONParser parser = new JSONParser();
@@ -87,6 +91,27 @@ public class FileHandler {
 		parseResult = (String) jsonObj.get(whatToParse);
 
 		return parseResult;
+	}
+	
+	public static ArrayList<String> parseJSON(File fileName) throws ParseException, IOException {
+
+		ArrayList<String> resultList = new ArrayList<>();
+
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(getEveryThingFromFile(fileName));
+		JSONObject jsonObj = (JSONObject) obj;
+
+		JSONArray slideContent = (JSONArray) jsonObj.get("Episodes");
+
+		Iterator i = slideContent.iterator();
+		while (i.hasNext()) {
+			JSONObject slide = (JSONObject) i.next();
+			String title = (String) slide.get("Title");
+			resultList.add(title);
+		}
+
+		return resultList;
+
 	}
 
 	public static String getEveryThingFromFile(File fileName) throws IOException {
