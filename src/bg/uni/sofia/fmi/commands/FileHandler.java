@@ -127,7 +127,7 @@ public class FileHandler {
 		br.close();
 		return result.toString().replace("\n", "").replace("\r", "");
 	}
-	
+
 	public static File downloadImage(File fileName) throws ParseException, IOException {
 
 		String posterUrl = parseJSON("Poster", fileName);
@@ -145,7 +145,7 @@ public class FileHandler {
 		byte[] response = out.toByteArray();
 
 		File resultFile = new File(fileName.getName().replace(".txt", "") + ".jpg");
-		
+
 		FileOutputStream fos = new FileOutputStream(resultFile);
 		fos.write(response);
 		fos.close();

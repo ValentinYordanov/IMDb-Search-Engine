@@ -10,12 +10,12 @@ public class GetMoviePosterCommand implements Command {
 
 	@Override
 	public void run(String argument) {
-		
+
 		String movieName = argument;
 		File posterFile = null;
 		File imageFile = null;
 		posterFile = FileHandler.makeAConnectionAndDownloadJSONFile(movieName);
-		
+
 		try {
 			imageFile = FileHandler.downloadImage(posterFile);
 		} catch (ParseException e) {
@@ -26,16 +26,16 @@ public class GetMoviePosterCommand implements Command {
 			e.printStackTrace();
 		}
 
-		if(Desktop.isDesktopSupported()) {
+		if (Desktop.isDesktopSupported()) {
 			try {
 				Desktop.getDesktop().open(imageFile);
-				//.delete();
+				// .delete();
 			} catch (Exception e) {
-				
+
 			}
 		}
 		posterFile.delete();
-		//imageFile.delete();
+		// imageFile.delete();
 	}
 
 }
