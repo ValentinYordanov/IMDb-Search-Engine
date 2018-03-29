@@ -1,5 +1,7 @@
 package bg.uni.sofia.fmi.controller;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,6 +92,7 @@ public class InputOutputController {
 
 		InputOutputController test = new InputOutputController();
 		test.run();
+		
 	}
 
 }

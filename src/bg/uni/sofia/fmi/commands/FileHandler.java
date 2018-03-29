@@ -1,17 +1,20 @@
 package bg.uni.sofia.fmi.commands;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -50,7 +53,6 @@ public class FileHandler {
 
 	}
 
-	// not done yet!
 	public static File makeAConnectionAndDownloadJSONFile(String seriesName, int seasonNumber) {
 
 		seriesName = seriesName.replace(" ", "+");
@@ -92,7 +94,7 @@ public class FileHandler {
 
 		return parseResult;
 	}
-	
+
 	public static ArrayList<String> parseJSON(File fileName) throws ParseException, IOException {
 
 		ArrayList<String> resultList = new ArrayList<>();
@@ -125,4 +127,30 @@ public class FileHandler {
 		br.close();
 		return result.toString().replace("\n", "").replace("\r", "");
 	}
+	
+	public static File downloadImage(File fileName) throws ParseException, IOException {
+
+		String posterUrl = parseJSON("Poster", fileName);
+
+		URL url = new URL(posterUrl);
+		InputStream in = new BufferedInputStream(url.openStream());
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		byte[] buf = new byte[1024];
+		int n = 0;
+		while (-1 != (n = in.read(buf))) {
+			out.write(buf, 0, n);
+		}
+		out.close();
+		in.close();
+		byte[] response = out.toByteArray();
+
+		File resultFile = new File(fileName.getName().replace(".txt", "") + ".jpg");
+		
+		FileOutputStream fos = new FileOutputStream(resultFile);
+		fos.write(response);
+		fos.close();
+
+		return resultFile;
+	}
+
 }

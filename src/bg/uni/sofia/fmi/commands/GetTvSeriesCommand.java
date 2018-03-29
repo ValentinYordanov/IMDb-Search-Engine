@@ -2,7 +2,6 @@ package bg.uni.sofia.fmi.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.parser.ParseException;
@@ -28,10 +27,10 @@ public class GetTvSeriesCommand implements Command {
 			System.out.println("Problem with parsing file");
 		}
 
-		for(String str : stringList) {
+		for (String str : stringList) {
 			System.out.println(str);
 		}
-		
+
 		seriesFile.delete();
 
 	}
