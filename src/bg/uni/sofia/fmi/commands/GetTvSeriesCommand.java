@@ -4,7 +4,10 @@ public class GetTvSeriesCommand implements Command {
 
 	@Override
 	public void run(String argument) {
-		// TODO Auto-generated method stub
+
+	}
+
+	public void makeAConnectionAndDownloadJsonFile(String movieName) {
 
 	}
 

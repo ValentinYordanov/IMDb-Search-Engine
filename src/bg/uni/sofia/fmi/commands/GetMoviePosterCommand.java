@@ -4,7 +4,6 @@ public class GetMoviePosterCommand implements Command {
 
 	@Override
 	public void run(String argument) {
-		// TODO Auto-generated method stub
 
 	}
 
